@@ -9,6 +9,7 @@ using namespace std;
 
 struct member
 {
+    // 联系人结构体
     string mName;
     int mSex;
     int mAge;
@@ -18,6 +19,7 @@ struct member
 
 struct addressBook
 {
+    // 通讯录结构体
     struct member mArr[maxSize];
     int mSize;
     /* data */
@@ -25,6 +27,7 @@ struct addressBook
 
 void addressMember(struct addressBook *abs)
 {
+    // 添加联系人
     if (abs->mSize == maxSize)
     {
         cout << "通讯录已满，无法添加" << endl;
@@ -84,6 +87,7 @@ void addressMember(struct addressBook *abs)
 
 void showMember(struct addressBook *abs)
 {
+    // 显示所有后联系人
     if (abs->mSize == 0)
     {
         cout << "当前通讯录中没有联系人！请添加联系人" << endl; /* code */
@@ -113,6 +117,7 @@ void showMember(struct addressBook *abs)
 
 int is_Here(struct addressBook *abs, string name)
 {
+    // 查询，修改，删除都需要查找联系人
     for (int i = 0; i < abs->mSize; i++)
     {
         if (abs->mArr[i].mName == name)
@@ -125,6 +130,8 @@ int is_Here(struct addressBook *abs, string name)
 
 void deMember(struct addressBook *abs)
 {
+    // 删除联系人
+
     cout << "请输入要删除的姓名：" << endl;
     string name;
     cin >> name;
@@ -151,6 +158,7 @@ void deMember(struct addressBook *abs)
 
 void findMember(struct addressBook *abs)
 {
+    // 查找联系人
     cout << "请输入要查找的姓名：" << endl;
     string name;
     cin >> name;
@@ -184,6 +192,7 @@ void findMember(struct addressBook *abs)
 
 void modMember(struct addressBook *abs)
 {
+    // 修改联系人
     cout << "请输入要修改的姓名：" << endl;
     string name;
     cin >> name;
@@ -253,6 +262,7 @@ void modMember(struct addressBook *abs)
 
 void clsMember(struct addressBook *abs)
 {
+    // 清除联系人
     cout << "清空成功！" << endl;
     abs->mSize = 0;
     cout << "清空成功！" << endl;
@@ -260,6 +270,7 @@ void clsMember(struct addressBook *abs)
 
 int showMenu()
 {
+    //显示目录
     cout << "——————————————————————————" << endl;
     cout << "|***** 1.添加联系人*****| " << endl;
     cout << "|***** 2.显示联系人*****| " << endl;
@@ -274,6 +285,8 @@ int showMenu()
 
 void backMenu()
 {
+    
+    //实现返回菜单
     cout << "按任意键返回菜单" << endl;
     cin.get();
     cin.get();
