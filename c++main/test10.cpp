@@ -109,10 +109,10 @@ void test04()
     SheepTuo st;
     st.Sheep::m_Age=18;
     st.Tuo::m_Age=25;
-    
+    cout << "st.m_age" <<st.m_Age <<endl;
 }
 
-main()
+int main()
 {
     cout << "hello world!" << endl;
     // test01();
