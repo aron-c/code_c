@@ -4,8 +4,49 @@
 
 WorkerManager::WorkerManager(/* args */)
 {
-    this->m_EmpNum = 0;
-    this->m_EmpArry = NULL;
+    // 1.初始化第一种：文件不存在
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+
+    if (!ifs.is_open())
+    {
+        // cout << "文件不存在" << endl;
+        this->m_EmpNum = 0;
+        this->m_EmpArry = NULL;
+        this->m_FileEmpty = true;
+        ifs.close();
+        return;
+    }
+
+    // 2.初始化第二种：文件存在，但为空
+    char ch;
+    ifs >> ch;     //打开文件右移一个字符
+    if (ifs.eof()) // ifs字符判断是否为eof()标志
+    {
+        // cout << "文件为空" << endl;
+        this->m_EmpNum = 0;
+        this->m_EmpArry = NULL;
+        this->m_FileEmpty = true;
+        ifs.close();
+        return;
+    }
+
+    // 3.初始化第三种，文件存在，不为空，有数据
+    int num = this->getNum();
+    // cout << "职工人数为：" << num << endl;
+    this->m_EmpNum = num;
+    this->m_FileEmpty = false;
+
+    this->m_EmpArry = new Worker *[this->m_EmpNum];
+    this->init_Emp();
+
+    // for (int i = 0; i < this->m_EmpNum; i++)
+    // {
+    //     cout << "员工编号：" << this->m_EmpArry[i]->m_Id << "\t员工姓名：" << this->m_EmpArry[i]->m_Name << "\t员工岗位：" << this->m_EmpArry[i]->m_DepId << endl;
+    // }
+
+    // this->m_EmpNum = 0;
+    // this->m_EmpArry = NULL;
 }
 
 WorkerManager::~WorkerManager()
@@ -117,6 +158,8 @@ void WorkerManager::addEmp()
         //更新员工人数，记录newsize
         this->m_EmpNum = newSize;
 
+        //改变为空标志
+        this->m_FileEmpty = false;
         cout << "成功添加" << addNum << "名新员工" << endl;
 
         this->save();
@@ -127,6 +170,7 @@ void WorkerManager::addEmp()
     }
 }
 
+//用文件保存员工
 void WorkerManager::save()
 {
     ofstream ofs;
@@ -138,6 +182,126 @@ void WorkerManager::save()
     }
 
     ofs.close();
+}
+
+//获得已有文件内的员工数
+int WorkerManager::getNum()
+{
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+
+    int id;
+    string name;
+    int Did;
+
+    int num = 0;
+    while (ifs >> id && ifs >> name && ifs >> Did)
+    {
+        num++; /* code */
+        //统计人数
+    }
+    ifs.close();
+    return num;
+}
+
+//将文件内的员工初始化进存储中
+void WorkerManager::init_Emp()
+{
+    ifstream ifs;
+    ifs.open(FILENAME, ios::in);
+
+    int id;
+    string name;
+    int dId;
+
+    int index = 0;
+    while (ifs >> id && ifs >> name && ifs >> dId)
+    {
+        Worker *worker = NULL;
+        if (dId == 1)
+        {
+            worker = new Employee(id, name, dId);
+        }
+        else if (dId == 2)
+        {
+            worker = new Manager(id, name, dId);
+        }
+        else
+        {
+            worker = new Boss(id, name, dId);
+        }
+
+        this->m_EmpArry[index] = worker;
+        index++;
+    }
+
+    ifs.close();
+}
+
+//显示所有职工
+void WorkerManager::show_Emp()
+{
+    if (this->m_FileEmpty)
+    {
+        cout << "文件不存在，或文件为空" << endl;
+    }
+    else
+    {
+        for (int i = 0; i < this->m_EmpNum; i++)
+        {
+            this->m_EmpArry[i]->showInfo();
+        }
+    }
+}
+
+//判断职工是否存在，存在返回位置，不存在返回-1
+int WorkerManager::isEx(int id)
+{
+    int index = -1;
+
+    for (int i = 0; i < this->m_EmpNum; i++)
+    {
+        if (this->m_EmpArry[i]->m_Id == id)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+//删除该编号职工
+void WorkerManager::del_Emp()
+{
+    if (this->m_FileEmpty)
+    {
+        cout << "文件不存在，或文件为空" << endl;
+    }
+    else
+    {
+        cout << "请输入要删除职工编号：" << endl;
+        int id;
+        cin >> id;
+        int index = this->isEx(id);
+
+        if (index != -1)
+        {
+            for (int i = index; i < this->m_EmpNum - 1; i++)
+            {
+                this->m_EmpArry[i] = this->m_EmpArry[i + 1]; //数据迁移
+            }
+            //总数-1
+            this->m_EmpNum--;
+
+            //保存到文件中
+            this->save();
+            cout << "删除成功" << endl;
+        }
+        else
+        {
+            cout << "删除失败，未找到职工" << endl;
+        }
+    }
 }
 
 //显示个人信息

@@ -34,6 +34,17 @@ public:
     int m_EmpNum;
     Worker **m_EmpArry;
 
+    bool m_FileEmpty;
+    int getNum();
+
+    void init_Emp();
+
+    void show_Emp();
+
+    void del_Emp();
+
+    int isEx(int id);
+
     ~WorkerManager();
 };
 

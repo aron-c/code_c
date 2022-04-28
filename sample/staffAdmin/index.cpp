@@ -51,11 +51,13 @@ int main()
             /* 添加员工 */
             break;
         case 2:
-
+            wm.show_Emp();
             backMenu();
             /* 显示员工 */
             break;
         case 3:
+            wm.del_Emp();
+            backMenu();
             /* 删除员工*/
             break;
         case 4:
