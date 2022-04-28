@@ -14,6 +14,8 @@ public:
     int m_Id;
     string m_Name;
     int m_DepId;
+
+    virtual ~Worker(); //添加虚析构函数，可以避免delete内存出错
 };
 
 class WorkerManager
@@ -42,6 +44,14 @@ public:
     void show_Emp();
 
     void del_Emp();
+
+    void mod_Emp();
+
+    void find_Emp();
+
+    void sort_Emp();
+
+    void clean_File();
 
     int isEx(int id);
 

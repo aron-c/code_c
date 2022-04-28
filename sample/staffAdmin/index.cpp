@@ -61,15 +61,23 @@ int main()
             /* 删除员工*/
             break;
         case 4:
+            wm.mod_Emp();
+            backMenu();
             /* 修改员工 */
             break;
         case 5:
+            wm.find_Emp();
+            backMenu();
             /* 查找员工 */
             break;
         case 6:
+            wm.sort_Emp();
+            backMenu();
             /* 排序员工 */
             break;
         case 7:
+            wm.clean_File();
+            backMenu();
             /* 清空文档 */
             break;
 

@@ -1,2 +1,6 @@
-1 zhangsan 1
-3 wangwan 3
+2 zhangsan 1
+3 zhangsan 2
+4 wangwu 2
+5 lisi 1
+8 wangwu 2
+9 zhangsan 2
