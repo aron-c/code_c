@@ -5,7 +5,6 @@ using namespace std;
 template <class T>
 class myArr
 {
-
 public:
     myArr(int cap);
     myArr(const myArr &arr);
